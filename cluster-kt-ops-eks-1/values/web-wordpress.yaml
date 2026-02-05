@@ -17,10 +17,6 @@ image:
 
 mariadb:
   enabled: true
-  image:
-    registry: docker.io
-    repository: mariadb
-    tag: "11.4"
   auth:
     database: wordpress
     username: wordpress
