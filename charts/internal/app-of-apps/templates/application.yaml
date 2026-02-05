@@ -7,12 +7,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ if $.Values.globals.cluster }}{{ $.Values.globals.cluster }}-{{- end }}{{ $application.name }}
+  name: {{ $application.name }}
   namespace: argo-cd
   annotations:
     argocd.argoproj.io/sync-wave: {{ add $projectBase $aIdx | printf "%v" | quote }}
 spec:
-  project: {{ if $.Values.globals.cluster }}{{ $.Values.globals.cluster }}-{{- end }}{{ $appProject.namespace }}
+  project: {{ $appProject.namespace }}
   sources:
   - targetRevision: {{ $application.targetRevision | default "main" }}
     repoURL: {{ $application.repoURL | default $.Values.globals.repoURL | quote }}
