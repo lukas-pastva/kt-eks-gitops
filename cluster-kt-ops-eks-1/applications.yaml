@@ -1,6 +1,5 @@
 globals:
   repoURL: https://github.com/lukas-pastva/kt-eks-gitops.git
-  cluster: kt-ops-eks-1
 appProjects:
   - namespace: app-of-apps-namespaces
     doNotCreateNamespace: true
