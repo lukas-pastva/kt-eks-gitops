@@ -1,6 +1,7 @@
 fullnameOverride: aws-load-balancer-controller
 replicaCount: 1
 clusterName: kt-ops-eks-1
+vpcId: vpc-0255331491290254a
 serviceAccount:
   name: aws-load-balancer-controller
   annotations:
