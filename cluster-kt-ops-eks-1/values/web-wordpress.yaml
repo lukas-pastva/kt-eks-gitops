@@ -24,7 +24,24 @@ mariadb:
 memcached:
   enabled: false
 
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPU: 80
+  targetMemory: 80
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
 persistence:
   enabled: true
   storageClassName: csi-s3
+  accessModes:
+    - ReadWriteMany
   size: 10Gi
