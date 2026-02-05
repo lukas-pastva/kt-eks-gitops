@@ -35,7 +35,7 @@ spec:
       {{- if $application.valueFiles }}
       - {{ $application.valueFiles }}
       {{- else }}
-      - $values/cluster-{{ $.Values.globals.cluster | default "in-cluster" }}/values/{{ $application.name }}.yaml
+      - $values/{{ $.Values.globals.valuesPath }}/{{ $application.name }}.yaml
       {{- end }}
   - repoURL: {{ $.Values.globals.repoURL | quote }}
     targetRevision: main

@@ -1,5 +1,7 @@
 globals:
   repoURL: https://github.com/lukas-pastva/kt-eks-gitops.git
+  cluster: kt-ops-eks-1
+  valuesPath: cluster-kt-ops-eks-1/values
 appProjects:
   - namespace: app-of-apps-namespaces
     doNotCreateNamespace: true
