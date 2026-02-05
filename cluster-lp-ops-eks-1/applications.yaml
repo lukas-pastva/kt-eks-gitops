@@ -1,0 +1,34 @@
+globals:
+  repoURL: git@github.com:lukas-pastva/kt-eks-gitops.git
+appProjects:
+  - namespace: app-of-apps-namespaces
+    doNotCreateNamespace: true
+    applications:
+      - name: app-of-apps-namespaces
+        path: internal/app-of-apps-namespaces
+        valueFiles: $values/clusters/cluster-lp-ops-eks-1/applications.yaml
+  - namespace: argocd
+    applications:
+      - name: argocd
+        path: external/argo/argo-cd/9.4.0/argo-cd
+
+  - namespace: web-wordpress
+    applications:
+      - name: web-wordpress-pma
+        path: external/lukas-pastva/helm-chartie/1.0.10
+      - name: web-wordpress-sql
+        path: external/lukas-pastva/helm-chartie/1.0.10
+      - name: web-wordpress
+        path: external/lukas-pastva/helm-chartie/1.0.10
+        
+  - namespace: cert-manager
+    rancherProjectId: p-p2f2d
+    applications:
+      - name: cert-manager
+        path: external/cert-manager/cert-manager/1.19.3/cert-manager
+
+  - namespace: ingress-nginx
+    rancherProjectId: p-p2f2d
+    applications:
+      - name: ingress-nginx
+        path: external/ingress-nginx/ingress-nginx/4.14.3/ingress-nginx

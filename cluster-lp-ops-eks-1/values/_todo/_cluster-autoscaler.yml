@@ -1,0 +1,44 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-autoscaler
+  namespace: argo-cd
+spec:
+  project: default
+  source:
+    repoURL: https://kubernetes.github.io/autoscaler
+    targetRevision: 9.55.0
+    chart: cluster-autoscaler
+    helm:
+      values: |-
+        extraArgs:
+          scale-down-utilization-threshold: 0.7
+        autoDiscovery:
+          clusterName: {{ .Values.fullName }}
+        awsRegion: {{ .Values.region }}
+        rbac:
+          create: true
+          serviceAccount:
+            name:  cluster-autoscaler
+            annotations:
+              eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountId }}:role/{{ .Values.fullName }}-cluster-autoscaler"
+        extraArgs:
+          balance-similar-node-groups: true
+          skip-nodes-with-local-storage: false
+          balancing-ignore-label_1: topology.ebs.csi.aws.com/zone
+          balancing-ignore-label_2: eks.amazonaws.com/nodegroup
+          balancing-ignore-label_3: eks.amazonaws.com/nodegroup-image
+          balancing-ignore-label_4: eks.amazonaws.com/sourceLaunchTemplateId
+          balancing-ignore-label_5: eks.amazonaws.com/sourceLaunchTemplateVersion        
+
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cluster-autoscaler
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

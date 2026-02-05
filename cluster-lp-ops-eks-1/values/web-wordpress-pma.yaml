@@ -1,0 +1,50 @@
+deployments:
+
+  web-wordpress-pma:
+    image: phpmyadmin/phpmyadmin:latest
+    resources:
+      limits:
+        memory: 500Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    ports:
+      - name: http
+        port: 80
+        domains:
+          - "pma-wordpress.jamf.fun"
+        paths:
+          - "/"
+        annotations:
+          nginx.ingress.kubernetes.io/auth-signin: https://oauth2-google.jamf.fun/oauth2/start?rd=$scheme://$http_host$request_uri
+          nginx.ingress.kubernetes.io/auth-url: https://oauth2-google.jamf.fun/oauth2/auth
+    command:
+      - sh
+      - -c
+    args:
+      - |
+        mkdir -p /etc/phpmyadmin/conf.d
+        cat <<'EOF' > /etc/phpmyadmin/conf.d/default-theme.php
+        <?php
+        $cfg['ThemeDefault'] = 'metro';
+        EOF
+        exec /docker-entrypoint.sh apache2-foreground
+    env:
+    - name: PMA_HOST
+      value: web-wordpress-sql.web-wordpress.svc.cluster.local
+    - name: PMA_PORT
+      value: "3306"
+    - name: PMA_USER
+      valueFrom:
+        secretKeyRef:
+          name: web-wordpress
+          key: MARIADB_USER
+    - name: PMA_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: web-wordpress
+          key: MARIADB_PASSWORD
+    - name: PMA_UPLOAD_MAX_FILESIZE
+      value: "64M"
+    - name: PMA_MEMORY_LIMIT
+      value: "256M"

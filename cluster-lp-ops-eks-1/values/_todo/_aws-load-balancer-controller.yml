@@ -1,0 +1,35 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-load-balancer-controller
+  namespace: argo-cd
+spec:
+  project: default
+  source:
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: 1.17.1
+    chart: aws-load-balancer-controller
+    helm:
+      values: |-
+        fullnameOverride: aws-load-balancer-controller
+        replicaCount: 1
+        clusterName: {{ .Values.fullName }}
+        region: {{ .Values.region }}
+        serviceAccount:
+          name: "aws-load-balancer-controller"
+          annotations:
+            eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountId }}:role/{{ .Values.fullName }}-aws-load-balancer-controller"
+        tolerations:
+          - key: "CriticalAddonsOnly"
+            operator: "Exists"
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: aws-load-balancer-controller
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

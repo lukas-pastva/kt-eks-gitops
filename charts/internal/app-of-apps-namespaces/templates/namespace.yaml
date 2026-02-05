@@ -1,0 +1,13 @@
+{{- range .Values.appProjects }}
+  {{- if .doNotCreateNamespace }}
+---
+  {{- else }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .namespace }}
+  labels:
+    field.cattle.io/projectId: {{ .rancherProjectId | default "empty" }}
+  {{- end }}
+{{- end }}

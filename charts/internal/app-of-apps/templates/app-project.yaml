@@ -1,0 +1,22 @@
+{{- range .Values.appProjects }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ if $.Values.globals.cluster }}{{ $.Values.globals.cluster }}-{{- end }}{{ .namespace }}
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  description: {{ if $.Values.globals.cluster }}{{ $.Values.globals.cluster }}-{{- end }}{{ .namespace }} project
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+    - '*'
+  orphanedResources:
+    warn: true
+{{- end }}
