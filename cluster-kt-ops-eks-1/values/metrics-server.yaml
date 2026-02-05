@@ -5,6 +5,8 @@ image:
   registry: registry.k8s.io
   repository: metrics-server/metrics-server
   tag: v0.7.2
+command:
+  - /metrics-server
 apiService:
   create: true
 tolerations:
