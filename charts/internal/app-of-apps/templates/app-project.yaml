@@ -4,7 +4,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: {{ if $.Values.globals.cluster }}{{ $.Values.globals.cluster }}-{{- end }}{{ .namespace }}
-  namespace: argocd
+  namespace: argo-cd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:

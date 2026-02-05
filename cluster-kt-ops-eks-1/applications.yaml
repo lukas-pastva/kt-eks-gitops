@@ -7,7 +7,7 @@ appProjects:
       - name: app-of-apps-namespaces
         path: internal/app-of-apps-namespaces
         valueFiles: $values/clusters/cluster-kt-ops-eks-1/applications.yaml
-  - namespace: argocd
+  - namespace: argo-cd
     applications:
       - name: argocd
         path: external/argo/argo-cd/9.4.0/argo-cd

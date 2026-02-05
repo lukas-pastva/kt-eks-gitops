@@ -667,7 +667,7 @@ e.g:
 server:
   additionalApplications:
     - name: guestbook
-      namespace: argocd
+      namespace: argo-cd
       additionalLabels: {}
       additionalAnnotations:
         "helm.sh/resource-policy": keep # <-- add this
