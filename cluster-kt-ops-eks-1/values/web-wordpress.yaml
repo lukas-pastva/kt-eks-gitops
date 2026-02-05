@@ -1,82 +1,28 @@
-deployments:
-  web-wordpress:
-    image: ghcr.io/lukas-pastva/web-spain:df794673fd98e6a7d1bd57a9061ff822664c34a4
-    extraServiceAccounts:
-      event-backup-k8s:
-        namespace: argo-workflows
-    roleRules:
-      - apiGroups: [""]
-        resources: ["pods"]
-        verbs: ["list", "get"]
-      - apiGroups: [""]
-        resources: ["pods/exec"]
-        verbs: ["create", "get"]
-    ports:
-      - name: http
-        port: 3000
-        domains:
-          - "wordpress.jamf.fun"
-        paths:
-          - "/"
-    env:
-      - name: PORT
-        value: "3000"
-      - name: TARGET_URL
-        value: "https://www.algarapictures.com/webcam"
-      - name: CAPTURE_INTERVAL_MS
-        value: "60000" # 60s
-      - name: OUTPUT_DIR
-        value: "/app/media"
-      - name: CROP_X1
-        value: "0"
-      - name: CROP_Y1
-        value: "0"
-      - name: CROP_X2
-        value: "100"
-      - name: CROP_Y2
-        value: "100"
-      # - name: CLICK_IFRAME_PLAY
-      #   value: "true"
-      # - Optionally adjust PLAY_WAIT_MS, WAIT_FOR_PLAYING_TIMEOUT_MS, and PLAYER_PLAY_SELECTORS.
-      - name: CLICK_IFRAME_PLAY_FULLSCREEN
-        value: "true"
-        # - Optional: tune PLAYER_FRAME_URL_MATCH, PLAYER_FULLSCREEN_SELECTORS, PLAYER_PLAY_SELECTORS, PLAY_WAIT_MS
-      - name: DB_NAME
-        valueFrom:
-          secretKeyRef:
-            name: web-wordpress
-            key: MARIADB_DATABASE
-      - name: DB_USER
-        valueFrom:
-          secretKeyRef:
-            name: web-wordpress
-            key: MARIADB_USER
-      - name: DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: web-wordpress
-            key: MARIADB_PASSWORD
-      - name: DB_HOST
-        value: web-wordpress-sql.web-wordpress.svc.cluster.local
-    volumeMountsFull:
-      - name: media
-        mountPath: /app/media
-    volumesFull:
-      - name: media
-        persistentVolumeClaim:
-          claimName: web-wordpress
-extraObjects:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: web-wordpress
-      annotations:
-        "helm.sh/resource-policy": keep
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: csi-s3
-      resources:
-        requests:
-          storage: 10Gi
-argoWorkflowsEnabled: true
+wordpressUsername: admin
+wordpressBlogName: "WordPress"
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: wordpress.jamf.fun
+  pathType: Prefix
+  tls: true
+
+mariadb:
+  enabled: true
+  auth:
+    database: wordpress
+    username: wordpress
+  primary:
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 1Gi
+
+memcached:
+  enabled: false
+
+persistence:
+  enabled: true
+  storageClassName: csi-s3
+  size: 10Gi

@@ -14,12 +14,8 @@ appProjects:
 
   - namespace: web-wordpress
     applications:
-      - name: web-wordpress-pma
-        path: external/lukas-pastva/helm-chartie/1.0.10
-      - name: web-wordpress-sql
-        path: external/lukas-pastva/helm-chartie/1.0.10
       - name: web-wordpress
-        path: external/lukas-pastva/helm-chartie/1.0.10
+        path: external/bitnami/wordpress/25.0.4
         
   - namespace: cert-manager
     applications:
