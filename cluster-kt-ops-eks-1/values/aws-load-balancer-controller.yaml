@@ -1,0 +1,10 @@
+fullnameOverride: aws-load-balancer-controller
+replicaCount: 1
+clusterName: kt-ops-eks-1
+serviceAccount:
+  name: aws-load-balancer-controller
+  annotations:
+    eks.amazonaws.com/role-arn: "" # Set your IAM role ARN
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"

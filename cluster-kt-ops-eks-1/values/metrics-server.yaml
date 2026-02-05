@@ -1,0 +1,5 @@
+apiService:
+  create: true
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"

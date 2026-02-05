@@ -1,0 +1,32 @@
+provider: aws
+logFormat: json
+policy: sync
+serviceAccount:
+  name: external-dns
+  annotations:
+    eks.amazonaws.com/role-arn: "" # Set your IAM role ARN
+serviceMonitor:
+  enabled: true
+txtPrefix: "kt-ops-eks-1-"
+txtOwnerId: "kt-ops-eks-1-"
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+podSecurityContext:
+  fsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  runAsUser: 65534
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 100m
+    memory: 64Mi

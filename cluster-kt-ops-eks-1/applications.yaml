@@ -26,3 +26,23 @@ appProjects:
     applications:
       - name: ingress-nginx
         path: external/ingress-nginx/ingress-nginx/4.14.3/ingress-nginx
+
+  - namespace: aws-load-balancer-controller
+    applications:
+      - name: aws-load-balancer-controller
+        path: external/aws/aws-load-balancer-controller/3.0.0/aws-load-balancer-controller
+
+  - namespace: cluster-autoscaler
+    applications:
+      - name: cluster-autoscaler
+        path: external/kubernetes/cluster-autoscaler/9.55.0/cluster-autoscaler
+
+  - namespace: external-dns
+    applications:
+      - name: external-dns
+        path: external/bitnami/external-dns/9.0.3/external-dns
+
+  - namespace: metrics-server
+    applications:
+      - name: metrics-server
+        path: external/bitnami/metrics-server/7.4.12/metrics-server
