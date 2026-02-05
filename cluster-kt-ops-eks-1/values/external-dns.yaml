@@ -8,6 +8,8 @@ image:
 provider: aws
 logFormat: json
 policy: sync
+domainFilters:
+  - jamf.fun
 serviceAccount:
   name: external-dns
   annotations:
