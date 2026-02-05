@@ -34,10 +34,6 @@ appProjects:
       - name: aws-load-balancer-controller
         path: external/aws/aws-load-balancer-controller/3.0.0/aws-load-balancer-controller
 
-  - namespace: cluster-autoscaler
-    applications:
-      - name: cluster-autoscaler
-        path: external/kubernetes/cluster-autoscaler/9.55.0/cluster-autoscaler
 
   - namespace: external-dns
     applications:
