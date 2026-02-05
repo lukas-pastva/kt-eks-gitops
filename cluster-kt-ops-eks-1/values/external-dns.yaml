@@ -17,7 +17,7 @@ serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::400528358945:role/kt-ops-eks-1-external-dns"
 serviceMonitor:
-  enabled: true
+  enabled: false
 txtPrefix: "kt-ops-eks-1-"
 txtOwnerId: "kt-ops-eks-1-"
 tolerations:
