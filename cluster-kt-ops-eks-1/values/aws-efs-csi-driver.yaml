@@ -8,7 +8,7 @@ storageClasses:
   - name: efs-sc
     parameters:
       provisioningMode: efs-ap
-      fileSystemId: "" # TODO: Set EFS filesystem ID
+      fileSystemId: " fs-0fe57b05230e1f313"
       directoryPerms: "700"
     reclaimPolicy: Delete
     volumeBindingMode: Immediate
