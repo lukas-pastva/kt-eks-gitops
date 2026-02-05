@@ -43,6 +43,11 @@ autoscaling:
   targetCPU: 80
   targetMemory: 80
 
+livenessProbe:
+  initialDelaySeconds: 300
+readinessProbe:
+  initialDelaySeconds: 120
+
 resources:
   requests:
     cpu: 200m
