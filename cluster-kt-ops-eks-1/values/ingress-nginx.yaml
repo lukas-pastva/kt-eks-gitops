@@ -1,10 +1,15 @@
 controller:
   ingressClassResource:
     default: true
-  hostNetwork: true
   service:
-    enabled: false
+    enabled: true
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true
   config:
+    use-forwarded-headers: "true"
     proxy-body-size: "50000m"
     proxy-read-timeout: "60000"
     proxy-send-timeout: "60000"

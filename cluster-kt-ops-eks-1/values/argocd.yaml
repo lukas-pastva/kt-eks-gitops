@@ -1,11 +1,11 @@
-dex:
-  enabled: false
 server:
   ingress:
     enabled: true
     hostname: argocd.jamf.fun
-    tls: false
+    tls: true
     ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
 configs:
   params:
     server.insecure: true
