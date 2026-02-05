@@ -19,8 +19,8 @@ mariadb:
   enabled: true
   image:
     registry: docker.io
-    repository: bitnami/mariadb
-    tag: 11.4.5-debian-12-r2
+    repository: mariadb
+    tag: "11.4"
   auth:
     database: wordpress
     username: wordpress
