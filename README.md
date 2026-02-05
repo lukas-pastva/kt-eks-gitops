@@ -10,22 +10,27 @@ IAM roles and policies are created via Terragrunt (`kt-eks-infra`). Run these co
 |------|---------|------|-------|
 | aws-load-balancer-controller | `aws iam get-role --role-name kt-ops-eks-1-aws-load-balancer-controller --query Role.Arn --output text` | `aws-load-balancer-controller.yaml` | `serviceAccount.annotations.eks.amazonaws.com/role-arn` |
 | external-dns | `aws iam get-role --role-name kt-ops-eks-1-external-dns --query Role.Arn --output text` | `external-dns.yaml` | `serviceAccount.annotations.eks.amazonaws.com/role-arn` |
-| efs-csi-driver | `aws iam get-role --role-name kt-ops-eks-1-efs-csi-driver --query Role.Arn --output text` | `aws-efs-csi-driver.yaml` | `controller.serviceAccount.annotations.eks.amazonaws.com/role-arn` |
+| efs-csi-driver | `aws iam get-role --role-name kt-ops-eks-1-aws-efs-csi-driver --query Role.Arn --output text` | `aws-efs-csi-driver.yaml` | `controller.serviceAccount.annotations.eks.amazonaws.com/role-arn` |
 
 ### EFS Filesystem (required for WordPress autoscaling)
 
-WordPress uses EFS (ReadWriteMany) so multiple pods can share files. Set the EFS filesystem ID in `aws-efs-csi-driver.yaml`:
+WordPress uses EFS (ReadWriteMany) so multiple pods can share files.
+
+Create the EFS CSI driver IAM resources first (in `kt-eks-infra`):
 
 ```bash
-aws efs describe-file-systems --query "FileSystems[?Name=='kt-ops-eks-1'].FileSystemId" --output text
+cd kt-eks-infra/infra/main/eu-central-1/clusters/kt-ops-eks-1/iam/policy/aws-efs-csi-driver && terragrunt apply
+cd kt-eks-infra/infra/main/eu-central-1/clusters/kt-ops-eks-1/iam/roles/aws-efs-csi-driver && terragrunt apply
 ```
 
-Set the output in `aws-efs-csi-driver.yaml` → `storageClasses[0].parameters.fileSystemId`.
-
-If no EFS filesystem exists yet, create one via Terragrunt or manually:
+Then get the values for `aws-efs-csi-driver.yaml`:
 
 ```bash
-aws efs create-file-system --performance-mode generalPurpose --throughput-mode bursting --tags Key=Name,Value=kt-ops-eks-1 --region eu-central-1 --query FileSystemId --output text
+# EFS CSI driver IAM role ARN
+aws iam get-role --role-name kt-ops-eks-1-aws-efs-csi-driver --query Role.Arn --output text
+
+# EFS filesystem ID (already set: fs-0fe57b05230e1f313)
+aws efs describe-file-systems --query "FileSystems[?Name=='kt-ops-eks-1'].FileSystemId" --output text
 ```
 
 ## Install ArgoCD (without Terragrunt)
