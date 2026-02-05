@@ -4,7 +4,7 @@ clusterName: kt-ops-eks-1
 serviceAccount:
   name: aws-load-balancer-controller
   annotations:
-    eks.amazonaws.com/role-arn: "" # Set your IAM role ARN
+    eks.amazonaws.com/role-arn: "arn:aws:iam::400528358945:role/kt-ops-eks-1-aws-load-balancer-controller"
 tolerations:
   - key: "CriticalAddonsOnly"
     operator: "Exists"

@@ -6,7 +6,7 @@ rbac:
   serviceAccount:
     name: cluster-autoscaler
     annotations:
-      eks.amazonaws.com/role-arn: "" # Set your IAM role ARN
+      eks.amazonaws.com/role-arn: "arn:aws:iam::400528358945:role/kt-ops-eks-1-cluster-autoscaler"
 extraArgs:
   scale-down-utilization-threshold: "0.7"
   balance-similar-node-groups: true
