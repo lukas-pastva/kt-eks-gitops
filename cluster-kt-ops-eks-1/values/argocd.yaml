@@ -37,7 +37,7 @@ extraObjects:
     spec:
       project: default
       source:
-        repoURL: git@github.com:lukas-pastva/kt-eks-gitops.git
+        repoURL: https://github.com/lukas-pastva/kt-eks-gitops.git
         path: charts/internal/app-of-apps
         targetRevision: main
         helm:
