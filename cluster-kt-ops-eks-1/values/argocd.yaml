@@ -1,61 +1,11 @@
-controller:
-  resources:
-    limits:
-      memory: 1000Mi
-    requests:
-      cpu: 100m
-      memory: 300Mi
 dex:
   enabled: false
-  resources:
-    limits:
-      memory: 128Mi
-    requests:
-      cpu: 10m
-      memory: 50Mi
-redis:
-  resources:
-    limits:
-      memory: 128Mi
-    requests:
-      cpu: 30m
-      memory: 50Mi
 server:
   ingress:
     enabled: true
     hostname: argocd.jamf.fun
     tls: false
     ingressClassName: nginx
-    annotations:
-      nginx.ingress.kubernetes.io/auth-signin: https://oauth2-google.jamf.fun/oauth2/start?rd=$scheme://$http_host$request_uri
-      nginx.ingress.kubernetes.io/auth-url: https://oauth2-google.jamf.fun/oauth2/auth
-  resources:
-    limits:
-      memory: 200Mi
-    requests:
-      cpu: 40m
-      memory: 128Mi
-repoServer:
-  resources:
-    limits:
-      memory: 800Mi
-    requests:
-      cpu: 100m
-      memory: 250Mi
-applicationSet:
-  resources:
-    limits:
-      memory: 128Mi
-    requests:
-      cpu: 40m
-      memory: 128Mi
-notifications:
-  resources:
-    limits:
-      memory: 128Mi
-    requests:
-      cpu: 50m
-      memory: 128Mi
 configs:
   params:
     server.insecure: true
@@ -92,7 +42,7 @@ extraObjects:
         targetRevision: main
         helm:
           valueFiles:
-          - ../../../clusters/cluster-lp-ops-eks-1/applications.yaml
+          - ../../../clusters/cluster-kt-ops-eks-1/applications.yaml
       destination:
         namespace: argocd
         name: in-cluster

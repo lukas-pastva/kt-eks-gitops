@@ -18,9 +18,6 @@ deployments:
           - "wordpress.jamf.fun"
         paths:
           - "/"
-        annotations:
-          nginx.ingress.kubernetes.io/auth-signin: https://oauth2-google.jamf.fun/oauth2/start?rd=$scheme://$http_host$request_uri
-          nginx.ingress.kubernetes.io/auth-url: https://oauth2-google.jamf.fun/oauth2/auth
     env:
       - name: PORT
         value: "3000"

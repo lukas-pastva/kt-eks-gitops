@@ -20,7 +20,7 @@ spec:
         serviceAccount:
           name: external-dns
           annotations:
-            eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.accountId }}:role/lp-ops-eks-1-external-dns
+            eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.accountId }}:role/kt-ops-eks-1-external-dns
         serviceMonitor:
           enabled: true
         txtPrefix: "{{ .Values.fullName }}-"

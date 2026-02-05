@@ -6,7 +6,7 @@ appProjects:
     applications:
       - name: app-of-apps-namespaces
         path: internal/app-of-apps-namespaces
-        valueFiles: $values/clusters/cluster-lp-ops-eks-1/applications.yaml
+        valueFiles: $values/clusters/cluster-kt-ops-eks-1/applications.yaml
   - namespace: argocd
     applications:
       - name: argocd
