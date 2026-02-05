@@ -41,7 +41,7 @@ resources:
 
 persistence:
   enabled: true
-  storageClassName: ebs-sc
+  storageClassName: efs-sc
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   size: 10Gi

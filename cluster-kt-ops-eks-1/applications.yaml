@@ -44,3 +44,9 @@ appProjects:
     applications:
       - name: metrics-server
         path: external/bitnami/metrics-server/7.4.12/metrics-server
+
+  - namespace: kube-system
+    doNotCreateNamespace: true
+    applications:
+      - name: aws-efs-csi-driver
+        path: external/aws/aws-efs-csi-driver/3.4.0/aws-efs-csi-driver

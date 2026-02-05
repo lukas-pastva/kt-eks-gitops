@@ -1,0 +1,14 @@
+controller:
+  serviceAccount:
+    name: efs-csi-controller-sa
+    annotations:
+      eks.amazonaws.com/role-arn: "" # TODO: Set EFS CSI driver IAM role ARN
+
+storageClasses:
+  - name: efs-sc
+    parameters:
+      provisioningMode: efs-ap
+      fileSystemId: "" # TODO: Set EFS filesystem ID
+      directoryPerms: "700"
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
